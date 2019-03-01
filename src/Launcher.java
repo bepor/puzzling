@@ -7,8 +7,8 @@ public class Launcher {
 		  int width = (int) screenSize.getWidth();
 		  int height = (int) screenSize.getHeight();
 		  try(PrintWriter writer = new PrintWriter(new OutputStreamWriter(
-					 new FileOutputStream("defaults.ini"),"utf-8"))) {
-				writer.println("ran"+"\n"+"Width:"+width+"\n"+"Height:"+height+"\n"+"ResetDefaults:false");
+			  new FileOutputStream("defaults.ini"),"utf-8"))) {
+			  	writer.println("ran"+"\n"+"Width:"+width+"\n"+"Height:"+height+"\n"+"ResetDefaults:false");
 		  }
 		  return new int[]{width,height};
 	 }
@@ -19,9 +19,10 @@ public class Launcher {
 		  System.out.println(fs.substring(fs.length()-19) +"\n"+ firstRun);
 		  int[] dim;
 		  if(firstRun){
-				dim=first();
+			dim=first();
 		  }else{
-				dim = new int[]{Integer.parseInt(fs.substring(fs.indexOf("Width:")+6, fs.indexOf("Height:")-1)) , Integer.parseInt(fs.substring(fs.indexOf("Height:")+7, fs.indexOf("ResetDefaults:false")-1))};
+			dim = new int[]{Integer.parseInt(fs.substring(fs.indexOf("Width:")+6, fs.indexOf("Height:")-1)) , 
+					Integer.parseInt(fs.substring(fs.indexOf("Height:")+7, fs.indexOf("ResetDefaults:false")-1))};
 		  }
 		  Game game = new Game("Game", dim[0], dim[1]);
 		  game.start();
