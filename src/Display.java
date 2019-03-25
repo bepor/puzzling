@@ -23,10 +23,10 @@ public class Display extends Canvas {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        createCanvas();
+        createCanvas(width,height);
     }
 
-    public void createCanvas() {
+    public void createCanvas(int width, int height) {
         canvas = new Canvas();
         Dimension dimensions = new Dimension(width, height);
         canvas.setPreferredSize(dimensions);
@@ -39,20 +39,20 @@ public class Display extends Canvas {
 
     public void fullscreen(int tempX, int tempY, int f) {
 
-        if (f%2!=0) {
+        if (f%2==0) {
             System.out.println(f);
             frame.setVisible(true);
             frame.setBounds(tempX, tempY, tempW, tempH);
             frame.dispose();
             frame.setUndecorated(false);
             frame.setVisible(true);
-            createCanvas();
+            createCanvas(tempW,tempH);
         } else {
             frame.dispose();
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             frame.setBounds(0, 0, (int) screenSize.getWidth(), (int) screenSize.getHeight());
-            setVisible(true);
-            createCanvas();
+            frame.setVisible(true);
+            createCanvas((int)screenSize.getWidth(),(int)screenSize.getHeight());
         }
     }
 
