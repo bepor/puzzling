@@ -51,6 +51,7 @@ public class Display extends Canvas {
             frame.dispose();
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             frame.setBounds(0, 0, (int) screenSize.getWidth(), (int) screenSize.getHeight());
+            frame.setUndecorated(true);
             frame.setVisible(true);
             createCanvas((int)screenSize.getWidth(),(int)screenSize.getHeight());
         }

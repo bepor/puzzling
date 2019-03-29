@@ -6,10 +6,10 @@ public class Game implements Runnable {
 
     //Window Variables
     private String title;
-    private int width, height,n;
+    private int width, height, n, tX, tY;
     //Runnable Variables
     private boolean running;
-    private boolean fbool=true;
+    private boolean fbool = true;
 
     private Thread thread;
 
@@ -42,19 +42,24 @@ public class Game implements Runnable {
     public void update() {
         keyManager.update();
         if (keyManager.f11) {
-            if(!fbool){
-                fbool=true;
+            if (!fbool) {
+                if(n%2==0){
+                tX = display.getJFrame().getX();
+                tY = display.getJFrame().getY();
+                }
+                fbool = true;
                 n++;
-                display.fullscreen(display.getJFrame().getX(), display.getJFrame().getY(), n);
+                display.fullscreen(tX, tY, n);
             }
-        } else{
-            fbool=false;
-        }
-}
+        } else {
+            fbool = false;
 
-    public void render(){
+        }
+    }
+
+    public void render() {
         bs = display.getCanvas().getBufferStrategy();
-        if(bs == null){
+        if (bs == null) {
             display.getCanvas().createBufferStrategy(3);
             return;
         }
@@ -64,42 +69,41 @@ public class Game implements Runnable {
         g.dispose();
     }
 
-    public void run(){
+    public void run() {
         init();
         int fps = 60;
-        double timePerTick = 1000000000/fps;
+        double timePerTick = 1000000000 / fps;
         double delta = 0;
         long now, lastTime = System.nanoTime();
-        while(running){
+        while (running) {
             now = System.nanoTime();
-            delta += (now - lastTime)/timePerTick;
+            delta += (now - lastTime) / timePerTick;
             lastTime = now;
-            if (delta >= 1){
+            if (delta >= 1) {
                 update();
                 render();
                 delta--;
             }
-        }        
+        }
     }
 
-    public synchronized void start(){
-        if (running){
+    public synchronized void start() {
+        if (running) {
             return;
         }
         running = true;
         thread = new Thread(this);
         thread.start();
     }
-    
-    public synchronized void stop(){
-        if (!running){
+
+    public synchronized void stop() {
+        if (!running) {
             return;
         }
         running = false;
-        try{
+        try {
             thread.join();
-        }
-        catch (InterruptedException e){
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
